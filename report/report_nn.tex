@@ -1,0 +1,112 @@
+\documentclass[10pt,twocolumn,letterpaper]{article}
+
+\usepackage{iccv}
+\usepackage{times}
+\usepackage{epsfig}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+%\usepackage[pagebackref=true,breaklinks=true,letterpaper=true,colorlinks,bookmarks=false]{hyperref}
+
+\iccvfinalcopy % *** Uncomment this line for the final submission
+
+%\def\iccvPaperID{****} % *** Enter the ICCV Paper ID here
+\def\httilde{\mbox{\tt\raisebox{-.5ex}{\symbol{126}}}}
+
+% Pages are numbered in submission mode, and unnumbered in camera-ready
+\ificcvfinal\pagestyle{empty}\fi
+\begin{document}
+
+%%%%%%%%% TITLE
+\title{Neural Networks}
+
+\author{Adrian Guthals \\
+{\tt\small aguthals@cs.ucsd.edu}
+\and
+David Larson \\
+{\tt\small dplarson@ucsd.edu}
+}
+
+\maketitle
+\thispagestyle{empty}
+
+%%%%%%%%% ABSTRACT
+\begin{abstract}
+   The ABSTRACT is to be in fully-justified italicized text, at the top
+   of the left-hand column, below the author and affiliation
+   information. Use the word ``Abstract'' as the title, in 12-point
+   Times, boldface type, centered relative to the column, initially
+   capitalized. The abstract is to be in 10-point, single-spaced type.
+   Leave two blank lines after the Abstract, then begin the main text.
+   Look at previous ICCV abstracts to get a feel for style and length.
+\end{abstract}
+
+%%%%%%%%% BODY TEXT
+\section{Introduction}
+
+For this project you must work in a team of exactly two students. The joint report for your team must be submitted in hard copy at the start of the lecture on Thursday March 14, 2013.
+
+The objective of this project is to understand the recursive auto encoder (RAE) method of learning meanings for sentences. Specifically, the goal is to reproduce experimental results from the paper Semi-Supervised Recursive Autoencoders for Predicting Sentiment Distributions by Richard Socher et al. You should aim to du- plicate the accuracy of 76.8\% reported for RAEs with random word initialization on the movie reviews (MR) dataset in Table 4 of the paper.
+
+Each team should implement the semi-supervised RAE method, based on the description in the paper. There are details of the method that are not explained in the paper. In particular, the gradients that are needed for training are not stated explicitly. Give all the equations for these in your report.
+
+\begin{figure}[t]
+\begin{center}
+\fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
+   %\includegraphics[width=0.8\linewidth]{egfigure.eps}
+\end{center}
+   \caption{Example of caption.  It is set in Roman so that mathematics
+   (always set in Roman: $B \sin A = A \sin B$) may be included without an
+   ugly clash.}
+\label{fig:long}
+\label{fig:onecol}
+\end{figure}
+
+\begin{figure*}
+\begin{center}
+\fbox{\rule{0pt}{2in} \rule{.9\linewidth}{0pt}}
+\end{center}
+   \caption{Example of a short caption, which should be centered.}
+\label{fig:short}
+\end{figure*}
+
+
+You can find the authors’ software and datasets at http://www.socher. org. Read the code there to help fill in details that are not explained in the paper, but do not copy that code, whether at a high level or at a low level. You can get good results using vectors of length 20. Longer vectors can give slightly higher accuracy. Training may require more iterations of BFGS for shorter vectors, pos- sibly because these may cause more local optima to exist.
+
+While developing your code, take steps to confirm that it is correct. In partic- ular, compare the result of evaluating your function that computes partial deriva- tives with the result of numerical differentiation of the loss function. The relative difference should be less than 10−6 between each numerical derivative and the cor- responding backpropagation derivative. To reduce error, use central differences for numerical derivatives.
+
+Suppose that the weight matrix W is in R2d×d. Then the time needed to run the neural network once is O(d2). It follows that the time needed to compute the partial derivative numerically for each entry Wij of W is O(d4), which is not feasible in practice. How can you verify that numerical and backpropagation derivatives are equal in less than O(d4) time? Also explain in your report other steps that you take to verify that your implementation is correct.
+
+Do experiments to investigate whether it is necessary to adjust the vector rep- resenting each word. Compare the following three alternatives: (i) the full method, (ii) the full method without using derivatives to adjust the meaning vector for each word, and (iii) a bag-of-words method that adjusts meaning vectors, but does not attempt to represent the structure or meaning of sentences. For case (iii), discuss how similar this model is to standard bag-of-words logistic regression.
+
+Implement the method first without normalization of vectors, that is using the pointwise transfer function tanh(a). After you succeed in doing the whole project with the unnormalized transfer function, then try using the normalized transfer function tanh(a)/|| tanh(a)||, which is not pointwise. The symbolic derivative of the normalized function is quite complicated; be sure that you work it out cor- rectly. Do you need to use the full Jacobian of the normalized function?
+
+Investigate experimentally whether normalization is beneficial. Look for trends in the meaning vectors with and without normalization, and try to give a qualita- tive mathematical explanation of the experimental results with and without nor- malization. Hint: what happens when a sigmoid function is saturated?
+
+
+\section{Design and Analysis of Algorithms}
+Implementaiton notes
+
+
+\section{Design of Experiments}
+Setup, results and discussion
+
+
+
+\section{Findings and Lessons Learned}
+Conclusions
+
+
+
+
+
+
+
+
+{\small
+\bibliographystyle{ieee}
+\bibliography{egbib}
+}
+
+\end{document}
