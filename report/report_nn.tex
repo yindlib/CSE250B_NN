@@ -61,8 +61,31 @@ Mention: neural networks, sentence meaning/sentiment
 %-----------------------------------------------------------------------------
 % ALGORITHMS
 %-----------------------------------------------------------------------------
-\section{Semi-Supervised Recursive Autoencoders}
+\section{Recursive Autoencoders}
 RAE, neural networks, backpropogation, error functions, greedy algorithm, calculating derivatives numerically using finite center-difference
+
+
+\subsection{Error Function}
+\begin{equation}
+    E_1 (k) =
+\end{equation}
+
+\begin{equation}
+    E_2 (k) =
+\end{equation}
+
+
+\subsection{Binary Tree Construction}
+
+\subsection{Goal of Training}
+
+
+\subsection{Gradient Verification}
+It is important to verify the accuracy of the gradients calculated using backpropogation. For this study we have chosen to verify the accuracy of backpropogation by comparing against gradients calculated numerically using finite central-differences:
+\begin{equation}
+    \frac{\partial J}{\partial \theta} = \frac{J(\theta + \epsilon) - J(\theta - \epsilon)}{2\epsilon} + O(\epsilon ^2)
+\end{equation}
+where $\epsilon$ is the grid spacing.
 
 
 
@@ -96,6 +119,15 @@ We use the same movie reviews dataset as in \cite{Socher}, which consists of 106
     \end{tabular}
 \end{table}
 
+
+%
+% OPTIMIZATION
+%
+\subsection{Optimization}
+L-BFGS
+
+\subsubsection{Convergence}
+error less than $10^{-6}$ (as stated in the project description)
 
 
 %
