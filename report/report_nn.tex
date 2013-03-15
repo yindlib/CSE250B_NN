@@ -75,9 +75,9 @@ RAE, neural networks, backpropogation, error functions, greedy algorithm, calcul
 % DATASETS
 %
 \subsection{Datasets}
-We use the same movie reviews dataset as in \cite{Socher}, which consists of 10662 snippets from reviews posted to the Rotten Tomatoes website\footnote{\url{http://www.rottentomatoes.com}}. Each snippet is roughly equivalent to a single sentence and includes a positive/negative label, with the entire dataset containing 5331 positive and 5331 negative labelled snippets. For all experiments we have randomly divided the dataset into a 0000 snippet training set ($\sim 70\%$) and a 0000 snippet ($\sim 30\%$) testing set \ref{tab:datasets}. Care has been taken to prevent any snippets from existing in both datasets, so as to not contaminate the results.
+We use the same movie reviews dataset as in \cite{Socher}, which consists of 10662 snippets from reviews posted to the Rotten Tomatoes website\footnote{\url{http://www.rottentomatoes.com}}. Each snippet is roughly equivalent to a single sentence and includes a positive/negative label, with the entire dataset containing 5331 positive and 5331 negative labelled snippets. For all experiments we randomly selected $\sim 70\%$ of the original dataset as a training set, with the remaining $\sim 30\%$ used as a testing set (see Table \ref{tab:datasets}). In splitting the dataset we have taken care to prevent any snippets from existing in both sets, so as to not contaminate the results.
 
-\begin{table}[ht]
+\begin{table}[t]
     \centering
 
     \caption{Number of total snippets ($N_{total}$), positive snippets ($N_{pos}$), and negative snippets ($N_{neg}$) for the original, training, and testing datasets.} 
@@ -90,8 +90,8 @@ We use the same movie reviews dataset as in \cite{Socher}, which consists of 106
         \bf{Dataset} & $N_{total}$ & $N_{pos}$ & $N_{neg}$ \\
         \midrule
         Original & 10662 & 5331 & 5331 \\
-        Training &  0000 & 0000 & 0000 \\
-        Testing  &  0000 & 0000 & 0000 \\
+        Training &  7462 & 0000 & 0000 \\
+        Testing  &  3200 & 0000 & 0000 \\
         \bottomrule
     \end{tabular}
 \end{table}
