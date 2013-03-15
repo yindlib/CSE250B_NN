@@ -40,7 +40,7 @@ David Larson \\
 
 
 \begin{abstract}
-Recreate results of Socher et al. "Semi-Supervised Recursive Autoendcoders". Learning meanings of sentences using Feed Forward Neural Networks with Backpropogation.
+We evaluate semi-supervised recursive autoencoders (RAE) as a method for predicting the sentiment of sentences. Using random word initialization, we are able to predict the sentiment of a movie review dataset with a 00.0\% accuracy, which is comparable to the 00.0\% accuracy reported in the 2011 paper ``Semi-Supervised Recursive Autoencoders'' by Soch et al.
 \end{abstract}
 
 
@@ -54,12 +54,16 @@ Socher et al. presented a semi-supervised method for learning meanings of senten
 
 The lecture notes state blah \cite{CSE250B}.
 
+Mention: neural networks, sentence meaning/sentiment
+
+
 
 %-----------------------------------------------------------------------------
 % ALGORITHMS
 %-----------------------------------------------------------------------------
-\section{Recursive Autoencoders}
-Theory and derivations (e.g. gradients)
+\section{Semi-Supervised Recursive Autoencoders}
+RAE, neural networks, backpropogation, error functions, greedy algorithm, calculating derivatives numerically using finite center-difference
+
 
 
 %-----------------------------------------------------------------------------
@@ -67,41 +71,52 @@ Theory and derivations (e.g. gradients)
 %-----------------------------------------------------------------------------
 \section{Experiments}
 
-
 %
-% DESIGN
+% DATASETS
 %
-\subsection{Design}
-Setup, configuration, hyperparameters, 
-
-\subsubsection{Datasets}
-
-\subsubsection{Hyperparameters}
-
-
-%
-% RESULTS
-%
-\subsection{Results and Discussion}
-
+\subsection{Datasets}
+We use the same movie reviews dataset as in \cite{Socher}, which consists of 10662 snippets from reviews posted to the Rotten Tomatoes website\footnote{\url{http://www.rottentomatoes.com}}. Each snippet is roughly equivalent to a single sentence and includes a positive/negative label, with the entire dataset containing 5331 positive and 5331 negative labelled snippets. For all experiments we have randomly divided the dataset into a 0000 snippet training set ($\sim 70\%$) and a 0000 snippet ($\sim 30\%$) testing set \ref{tab:datasets}. Care has been taken to prevent any snippets from existing in both datasets, so as to not contaminate the results.
 
 \begin{table}[ht]
     \centering
 
-    \caption{The description of the table shown. What does it look like if it's two lines tall? I wonder I wonder I wonder I wonderrrrrrrrrrrr} 
+    \caption{Number of total snippets ($N_{total}$), positive snippets ($N_{pos}$), and negative snippets ($N_{neg}$) for the original, training, and testing datasets.} 
     \label{tab:datasets}
 
     \ra{1.2}
-    \begin{tabular}{@{} l l l l l @{}}
+    \begin{tabular}{@{} l r r r  @{}}
         \\
         \toprule
-        \bf{Dataset} & \bf{Documents} & \bf{Vocabulary} & $\alpha$ & $\beta$ \\
+        \bf{Dataset} & $N_{total}$ & $N_{pos}$ & $N_{neg}$ \\
         \midrule
-        Classic400 & 400 & 6205 & 0.01 & 0.1 \\
-        KOS        & 400 & 6906 & 0.01 & 0.1\\
+        Original & 10662 & 5331 & 5331 \\
+        Training &  0000 & 0000 & 0000 \\
+        Testing  &  0000 & 0000 & 0000 \\
         \bottomrule
     \end{tabular}
 \end{table}
+
+
+
+%
+% RAE
+%
+\subsection{Experiment 1: RAE}
+The full method (RAE)
+
+
+%
+% NO DERIVATIVES
+%
+\subsection{Experiment 2: RAE without Derivatives}
+RAE without derivatives to adjust the meaning vector of each word
+
+
+%
+% BAG-OF-WORDS
+%
+\subsection{Experiment 3: Bag-of-Words}
+
 
 
 %-----------------------------------------------------------------------------
@@ -109,6 +124,7 @@ Setup, configuration, hyperparameters,
 %-----------------------------------------------------------------------------
 \section{Conclusion}
 Final remarks
+
 
 
 %-----------------------------------------------------------------------------
@@ -119,6 +135,7 @@ Final remarks
 \bibliographystyle{IEEEtran}
 \bibliography{sources}
 }
+
 
 
 \end{document}
