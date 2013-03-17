@@ -100,6 +100,7 @@ where $\epsilon$ is the grid spacing.
 \subsection{Datasets}
 We use the same movie reviews dataset as in \cite{Socher}, which consists of 10662 snippets from reviews posted to the Rotten Tomatoes website\footnote{\url{http://www.rottentomatoes.com}}. Each snippet is roughly equivalent to a single sentence and includes a positive/negative label, with the entire dataset containing 5331 positive and 5331 negative labelled snippets. For all experiments we randomly selected $\sim 70\%$ of the original dataset as a training set, with the remaining $\sim 30\%$ used as a testing set (see Table \ref{tab:datasets}). In splitting the dataset we have taken care to prevent any snippets from existing in both sets, so as to not contaminate the results.
 
+
 \begin{table}[t]
     \centering
 
@@ -145,11 +146,26 @@ The full method (RAE)
 RAE without derivatives to adjust the meaning vector of each word
 
 
-%
-% BAG-OF-WORDS
-%
-\subsection{Experiment 3: Bag-of-Words}
+\begin{table}[t]
+    \centering
 
+    \caption{Words predicted to be the most positive and negative.} 
+    \label{tab:most}
+
+    \ra{1.2}
+    \begin{tabular}{@{} l l l @{}}
+        \\
+        \toprule
+        \bf{Ranking} & \bf{Positive} & \bf{Negative} \\
+        \midrule
+        1 &   &  \\
+        2 &   &  \\
+        3 &   &  \\
+        4 &   &  \\
+        5 &   &  \\
+        \bottomrule
+    \end{tabular}
+\end{table}
 
 
 %-----------------------------------------------------------------------------
