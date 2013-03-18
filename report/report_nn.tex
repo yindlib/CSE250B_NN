@@ -49,7 +49,9 @@ We evaluate semi-supervised recursive autoencoders (RAE) as a method for predict
 % INTRO
 %-----------------------------------------------------------------------------
 \section{Introduction}
-Learning the meaning of text documents, including short documents such as Twitter messages, is an active field of research in computer science. Until 2011, the state-of-the-art methods for predicting sentence-level meanings relied on either bag-of-words representations or manually generated resources, both of which have difficulty in dealing with complex sentiments. To overcome this shortcoming, Socher et al. introduced a new semi-supervised method based on neural networks \cite{Socher}. This study will attempt to recreate and expand upon the results reported in Socher et al.
+Learning the meaning of text documents, including short documents such as Twitter messages, is an active field of research in computer science. Until 2011, the state-of-the-art methods for predicting sentence-level meanings relied on either bag-of-words representations or manually generated resources, both of which have difficulty in dealing with complex sentiments.  Bag-of-words methods ignore the word ordering of a sentence, which means two sentences with the same words will be treated the same (e.g. ``Man sees dog.'' versus ``Dog sees man.''). Meanwhile, methods that use manually generated resources are unable to deal with sentences beyond the scope of the resources, which would be a common occurance for sources that contain rapidly evolving linguistics, e.g., Twitter messages.
+
+To overcome these shortcomings, Socher et al. introduced a new semi-supervised method based on neural networks \cite{Socher}. This study will attempt to recreate and expand upon the results reported in Socher et al.
 
 
 
@@ -130,12 +132,16 @@ where $T(s)$ is the set of non-leaf nodes and $\alpha$ is a hyperparameter weigh
 Backpropogation is an efficient method for computing the derivatives required for training a neural network. Given
 
 
-
+%
+% GOAL
+%
 \subsection{Goal of Training}
 The goal of training is to learn the parameters $\theta$ that minimize the objective function $J$.
 
 
-
+%
+% FINITE CENTRAL-DIFFERENCES
+%
 \subsection{Gradient Verification}
 It is important to verify the accuracy of the gradients calculated using backpropogation. For this study we have chosen to verify the accuracy of backpropogation by comparing against gradients calculated numerically using finite central-differences:
 \begin{equation}
@@ -233,10 +239,10 @@ Comparing words and phrases with the most similar meanings is another intiutive 
 \end{equation}
 which is bounded between $-1$ (opposite in meaning) and $+1$ (same in meaning). Applying this metric to Table \ref{tab:words} we find the following pairs to be most similar:
 \begin{enumerate}
-    \item Positive words: ``bad'' and ``boring''
-    \item Negative words: ``wonderful'' and ``enjoyable''
-    \item Positive phrases (length 2): ``how bad'' and ``of bad''
-    \item Negative phrases (length 2): ``moving and'' and ``and powerful''
+    \item Positive ($n=1$): ``bad'' and ``boring''
+    \item Negative ($n=1$): ``wonderful'' and ``enjoyable''
+    \item Positive ($n=2$): ``how bad'' and ``of bad''
+    \item Negative ($n=2$): ``moving and'' and ``and powerful''
 \end{enumerate}
 
 
@@ -246,7 +252,7 @@ Visually inspecting the tree structure of sentences offers on insight on the str
 
 \begin{figure}[h]
 \begin{center}
-    \includegraphics[width=0.7\textwidth]{tree_positive}
+    \includegraphics[width=0.6\textwidth]{tree_positive}
     \caption{The tree structured determined by the greedy algorithm of a positive sentence.}
     \label{fig:tree_positive}
 \end{center}
@@ -255,7 +261,7 @@ Visually inspecting the tree structure of sentences offers on insight on the str
 
 \begin{figure}[h]
 \begin{center}
-    \includegraphics[width=0.7\textwidth]{tree_positive}
+    \includegraphics[width=0.6\textwidth]{tree_positive}
     \caption{The tree structured determined by the greedy algorithm of a negative sentence.}
     \label{fig:tree_negative}
 \end{center}
