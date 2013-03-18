@@ -65,7 +65,7 @@ For any English sentence of length $n$, the syntactic structure of the sentence 
     x_k = h(W[x_i ; x_j] + b)
     \label{eq:xk}
 \end{equation}
-where $W$ and $b$ are parameters to be learned while $h()$ is a pointwise sigmoid function which maps $R^d$ to $[-1, +1]^d$. As $x_k$, $x_i$, and $x_j$ are $\in R^d$, then $W \in R^{d \times 2d}$ and $b \in R^d$. To learn $W$ and $b$, the target meaning $t$ of the sentence must be known, which is usually not the case. To get around this, we use autoencoders, whose goal is to reconstruct the input \cite{CSE250B}.
+where $W$ and $b$ are parameters to be learned while $h()$ is a pointwise sigmoid function which maps $R^d$ to $[-1, +1]^d$ ($h() = tanh()$ for this study). As $x_k$, $x_i$, and $x_j$ are $\in R^d$, then $W \in R^{d \times 2d}$ and $b \in R^d$. To learn $W$ and $b$, the target meaning $t$ of the sentence must be known, which is usually not the case. To get around this, we use autoencoders, whose goal is to reconstruct the input \cite{CSE250B}.
 
 
 %
