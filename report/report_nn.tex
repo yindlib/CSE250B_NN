@@ -40,7 +40,7 @@ David Larson \\
 
 
 \begin{abstract}
-We evaluate semi-supervised recursive autoencoders (RAE) as a method for predicting the sentiment of sentences. Using random word initialization, we are able to predict the sentiment of a movie review dataset with a 00.0\% accuracy, which is comparable to the 76.8\% accuracy reported in the 2011 paper ``Semi-Supervised Recursive Autoencoders'' by Soch et al.
+We evaluate semi-supervised recursive autoencoders (RAE) as a method for predicting the sentiment of sentences. Using random word initialization, we are able to predict the sentiment of a movie review dataset with a 74.5\% accuracy, which is only 3.3\% less than the 76.8\% accuracy reported in the 2011 paper ``Semi-Supervised Recursive Autoencoders'' by Soch et al.
 \end{abstract}
 
 
@@ -105,27 +105,7 @@ where $\epsilon$ is the grid spacing.
 % DATASETS
 %
 \subsection{Datasets}
-We use the same movie reviews dataset as in \cite{Socher}, which consists of 10662 snippets from reviews posted to the Rotten Tomatoes website\footnote{\url{http://www.rottentomatoes.com}}. Each snippet is roughly equivalent to a single sentence and includes a positive/negative label, with the entire dataset containing 5331 positive and 5331 negative labelled snippets. For all experiments we randomly selected $\sim 70\%$ of the original dataset as a training set, with the remaining $\sim 30\%$ used as a testing set (see Table \ref{tab:datasets}). In splitting the dataset we have taken care to prevent any snippets from existing in both sets, so as to not contaminate the results.
-
-
-\begin{table}[t]
-    \centering
-
-    \caption{Number of total snippets ($N_{total}$), positive snippets ($N_{pos}$), and negative snippets ($N_{neg}$) for the original, training, and testing datasets.} 
-    \label{tab:datasets}
-
-    \ra{1.2}
-    \begin{tabular}{@{} l r r r  @{}}
-        \\
-        \toprule
-        \bf{Dataset} & $N_{total}$ & $N_{pos}$ & $N_{neg}$ \\
-        \midrule
-        Original & 10662 & 5331 & 5331 \\
-        Training &  7462 & 0000 & 0000 \\
-        Testing  &  3200 & 0000 & 0000 \\
-        \bottomrule
-    \end{tabular}
-\end{table}
+We use the same movie reviews dataset as in \cite{Socher}, which consists of 10662 snippets from reviews posted to the Rotten Tomatoes website\footnote{\url{http://www.rottentomatoes.com}}. Each snippet is roughly equivalent to a single sentence and includes a positive/negative label, with the entire dataset containing 5331 positive and 5331 negative labelled snippets. For all experiments we randomly selected $\sim 90\%$ of the original dataset as a training set, with the remaining $\sim 10\%$ used as a testing set. In splitting the dataset we have taken care to prevent any snippets from existing in both sets, so as to not contaminate the results.
 
 
 %
@@ -146,6 +126,12 @@ Regularization: ?
 %
 \subsection{Experiment 1: RAE}
 The full method (RAE)
+
+d = 20: prediction accuracy = 74.5\%
+
+10-fold cross validation
+
+same hyperparameters as Socher et al.
 
 
 %
@@ -215,7 +201,7 @@ Table \ref{tab:words}--\ref{tab:phrases} shows the words and phrases predicted t
         3 & and beautifully & how bad \\
         4 & a moving        & the dullest \\
         5 & a triumph       & flat , \\
-        6 & a beautiful     & how bad \\
+        6 & a beautiful     & of bad \\
         7 & the best        & it fails \\
         8 & and powerful    & it isn't \\
         9 & its flaws       & and predictable \\
