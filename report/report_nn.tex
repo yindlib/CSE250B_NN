@@ -6,6 +6,7 @@
 % figures
 \usepackage{graphicx}
 \graphicspath{{fig/}}
+\usepackage{subfigure}
 
 % links
 \usepackage[hidelinks]{hyperref}
@@ -90,6 +91,7 @@ where $n_i$ and $n_j$ are the number of children nodes of nodes $i$ and $j$ resp
 % TREE
 %
 \subsection{Binary Tree Construction}
+\label{sec:greedy}
 If the tree structure of a sentence is unknown, it can be approximated using a greedy algorithm:
 \begin{enumerate}
     \item calculate $E_1(k)$ for all $n - 1$ pairs of consecutive words
@@ -161,7 +163,7 @@ A downside to using numerical derivatives to verify backpropogation is time comp
 % DATASETS
 %
 \subsection{Datasets}
-We use the same movie reviews dataset as in \cite{Socher}, which consists of 10662 snippets from reviews posted to the Rotten Tomatoes website\footnote{\url{http://www.rottentomatoes.com}}. Each snippet is roughly equivalent to a single sentence and includes a positive/negative label, with the entire dataset containing 5331 positive and 5331 negative labelled snippets. For all experiments we randomly selected 90\% of the original dataset as a training set, with the remaining 10\% used as a testing set. In splitting the dataset we have taken care to prevent any snippets from existing in both sets, so as to not contaminate the results.
+We use the same movie reviews dataset as in \cite{Socher}, which consists of 10662 snippets from reviews posted to the Rotten Tomatoes website\footnote{\url{http://www.rottentomatoes.com}}. Each snippet is roughly equivalent to a single sentence and includes a positive/negative label, with the entire dataset containing 5331 positive and 5331 negative labelled snippets. For all experiments we randomly selected 90\% of the original dataset as a training set, with the remaining 10\% used as a testing set. In splitting the dataset we have taken care to prevent any snippets from existing in both sets, so as to not contaminate the results. Also, non-word modifying punctuation marks (i.e. commas, colons, semi-colons and periods) were treated as separate words in each sentence, rather than lumped together with their neighbors.
 
 
 %
@@ -247,34 +249,23 @@ which is bounded between $-1$ (opposite in meaning) and $+1$ (same in meaning). 
 
 
 \subsubsection{Tree Structure of Interesting Sentences}
-Visually inspecting the tree structure of sentences offers on insight on the strengths and weaknesses of the greedy algorithm. Figure \ref{fig:tree_positive} shows the structure of a positive sentence, which the greedy algorithm correctly determined. Meanwhile Figure \ref{fig:tree_negative} shows the structure of a negative sentence which the greedy algorithm performed poorly. Specifically, the structure should have connected ``right now'' with ``go , girls'' instead of ``the reality drain .''. Incorrectly determine tree structures such shown in Figure \ref{fig:tree_negative} likely caused problems for the RAE model and decreased it's prediction accuracy.
+Visually inspecting the tree structure of sentences offers on insight on the strengths and weaknesses of the greedy algorithm. Figure \ref{fig:tree} shows the tree structure of a positive and negative sentence. The greedly algorithm correctly determined the structure of the positive sentence, but had issues with the negative sentence. Specifically, the structure should have connected ``right now'' with ``go , girls'' instead of ``the reality drain .''. Incorrectly determine tree structures such as the one shown in Figure \ref{fig:tree} are likely causes of error for the RAE model.
 
 
-\begin{figure}[h]
-\begin{center}
-    \includegraphics[width=0.6\textwidth]{tree_positive}
-    \caption{The tree structured determined by the greedy algorithm of a positive sentence.}
-    \label{fig:tree_positive}
-\end{center}
+\begin{figure}[t]
+    \centering
+    \mbox{\subfigure[positive]{\includegraphics[width=0.5\textwidth]{tree_positive}} \quad
+        \subfigure[negative]{\includegraphics[width=0.45\textwidth]{tree_negative} }}
+    \caption{The binary tree structured of a positive sentence and negative sentence, with black solid circles to indicate nodes. The structure was determined using the greedy algorithm outlined in Section \ref{sec:greedy}.}
+    \label{fig:tree}
 \end{figure}
-
-
-\begin{figure}[h]
-\begin{center}
-    \includegraphics[width=0.6\textwidth]{tree_positive}
-    \caption{The tree structured determined by the greedy algorithm of a negative sentence.}
-    \label{fig:tree_negative}
-\end{center}
-\end{figure}
-
-
 
 
 %-----------------------------------------------------------------------------
 % CONCLUSION
 %-----------------------------------------------------------------------------
 \section{Conclusion}
-Final remarks
+Semi-supervised recursive autoencoders were used to predict the meanings of a movie review dataset. Our implementation of the method achieved a prediction accuracy of 74.5\%
 
 
 
