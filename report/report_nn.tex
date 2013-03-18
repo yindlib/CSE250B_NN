@@ -193,61 +193,37 @@ With 10-fold cross-validation and $d=20$, we were able to achieve a prediction a
 
 
 \subsubsection{Most Positive and Negative}
-Table \ref{tab:words}--\ref{tab:phrases} shows the words and phrases predicted to be the most positive and negative. The only result that stands out as possibly an error is the word ``flaws'' being predicted as positive rather than negative. Although the word ``flaws`` may be normally associated with a negative meaning, it could be associated with a positive meaning due its usage in a phrase, e.g., ``despite its flaws''.
+Table \ref{tab:words} shows the words and phrases predicted to be the most positive and negative. The only result that stands out as possibly an error is the word ``flaws'' being predicted as positive rather than negative. Although the word ``flaws`` may be normally associated with a negative meaning, it could be associated with a positive meaning due its usage in a phrase, e.g., ``despite its flaws''.
 
 
 \begin{table}[t]
     \centering
 
-    \caption{Words predicted to be the most positive and negative.} 
+    \caption{$n$-grams predicted to be the most positive and negative.} 
     \label{tab:words}
 
     \ra{1.2}
-    \begin{tabular}{@{} l l l @{}}
+    \begin{tabular}{@{} l l l c l l @{}}
         \\
         \toprule
-        \bf{Ranking} & \bf{Positive} & \bf{Negative} \\
+        & \multicolumn{2}{c}{$n=1$} & \phantom{abc} & \multicolumn{2}{c}{$n=2$}\\
+        \cmidrule{2-3} \cmidrule{5-6}
+        \bf{Ranking} & \bf{Positive} & \bf{Negative} && \bf{Positive} & \bf{Negative} \\
         \midrule
-        1 & beautiful   & fails  \\
-        2 & brilliant   & boring \\
-        3 & thoughtful  & neither\\
-        4 & triump      & bad \\
-        5 & flaws       & flat \\
-        6 & beautifully & predictable \\
-        7 & success     & bore \\
-        8 & spectacular & poorly \\
-        9 & enjoyable   & suffers \\
-        10 & wonderful  & unnecessary \\
+        1 & beautiful   & fails         && moving and      & lack of \\
+        2 & brilliant   & boring        && an enjoyable    & boring . \\
+        3 & thoughtful  & neither       && and beautifully & how bad \\
+        4 & triump      & bad           && a moving        & the dullest \\
+        5 & flaws       & flat          && a triumph       & flat , \\
+        6 & beautifully & predictable   && a beautiful     & of bad \\
+        7 & success     & bore          && the best        & it fails \\
+        8 & spectacular & poorly        && and powerful    & it isn't \\
+        9 & enjoyable   & suffers       && its flaws       & and predictable \\
+        10 & wonderful  & unnecessary   && a wonderful     & a boring \\
         \bottomrule
     \end{tabular}
 \end{table}
 
-
-\begin{table}[t]
-    \centering
-
-    \caption{Phrases (length 2) predicted to be the most positive and negative.} 
-    \label{tab:phrases}
-
-    \ra{1.2}
-    \begin{tabular}{@{} l l l @{}}
-        \\
-        \toprule
-        \bf{Ranking} & \bf{Positive} & \bf{Negative} \\
-        \midrule
-        1 & moving and      & lack of \\
-        2 & an enjoyable    & boring .\\
-        3 & and beautifully & how bad \\
-        4 & a moving        & the dullest \\
-        5 & a triumph       & flat , \\
-        6 & a beautiful     & of bad \\
-        7 & the best        & it fails \\
-        8 & and powerful    & it isn't \\
-        9 & its flaws       & and predictable \\
-        10 & a wonderful    & a boring \\
-        \bottomrule
-    \end{tabular}
-\end{table}
 
 
 \subsubsection{Similar Meanings}
@@ -255,7 +231,7 @@ Comparing words and phrases with the most similar meanings is another intiutive 
 \begin{equation}
     \textrm{cosine similarity} (x, y) = \frac{\sum_i x_i y_i}{\sqrt{\sum_i x_i^2} \sqrt{\sum_i y_i^2}}
 \end{equation}
-which is bounded between $-1$ (opposite in meaning) and $+1$ (same in meaning). Applying this metric to Table \ref{tab:words}--\ref{tab:phrases} we find the following pairs to be most similar:
+which is bounded between $-1$ (opposite in meaning) and $+1$ (same in meaning). Applying this metric to Table \ref{tab:words} we find the following pairs to be most similar:
 \begin{enumerate}
     \item Positive words: ``bad'' and ``boring''
     \item Negative words: ``wonderful'' and ``enjoyable''
