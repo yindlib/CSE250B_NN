@@ -40,7 +40,7 @@ David Larson \\
 
 
 \begin{abstract}
-We evaluate semi-supervised recursive autoencoders (RAE) as a method for predicting the sentiment of sentences. Using random word initialization, we are able to predict the sentiment of a movie review dataset with a 00.0\% accuracy, which is comparable to the 00.0\% accuracy reported in the 2011 paper ``Semi-Supervised Recursive Autoencoders'' by Soch et al.
+We evaluate semi-supervised recursive autoencoders (RAE) as a method for predicting the sentiment of sentences. Using random word initialization, we are able to predict the sentiment of a movie review dataset with a 00.0\% accuracy, which is comparable to the 76.8\% accuracy reported in the 2011 paper ``Semi-Supervised Recursive Autoencoders'' by Soch et al.
 \end{abstract}
 
 
@@ -132,7 +132,9 @@ We use the same movie reviews dataset as in \cite{Socher}, which consists of 106
 % OPTIMIZATION
 %
 \subsection{Optimization}
-We use limited-memory Broyden-Fletcher-Goldfarb-Shanno (L-BFGS), a well-known quasi-Newton optimization method, to learn the parameters $\theta$. As we are writing our code in Python, we elected to use the L-BFGS function from the SciPy library \cite{scipy}.
+We use limited-memory Broyden-Fletcher-Goldfarb-Shanno (L-BFGS), a well-known quasi-Newton optimization method, to learn the parameters $\theta$. Specifically we use the Matlab-based L-BFGS function from the minFunc toolbox \cite{minFunc}.
+
+
 
 Convergence: error less than $10^{-6}$ (as stated in the project description)
 
@@ -157,7 +159,9 @@ RAE without derivatives to adjust the meaning vector of each word
 %
 % ANALYSIS
 %
-\subsection{Analysis of Trained Model}
+\subsection{Results}
+
+\subsubsection{Most Positive and Negative Words and Phrases}
 Table \ref{tab:words}--\ref{tab:phrases} shows the words and phrases predicted to be the most positive and negative. The only result that stands out as possibly an error is the word ``flaws'' being predicted as positive rather than negative. Although the word ``flaws`` may be normally associated with a negative meaning, it could be associated with a positive meaning due its usage in a phrase, e.g., ``despite its flaws''.
 
 \subsubsection{Words and phrases with similar meanings}
