@@ -40,7 +40,7 @@ David Larson \\
 
 
 \begin{abstract}
-We evaluate semi-supervised recursive autoencoders (RAE) as a method for predicting the sentiment of sentences. Using random word initialization, we are able to predict the sentiment of a movie review dataset with a 74.5\% accuracy, which is only 3.3\% less than the 76.8\% accuracy reported in the 2011 paper ``Semi-Supervised Recursive Autoencoders'' by Soch et al.
+We evaluate semi-supervised recursive autoencoders (RAE) as a method for predicting the sentiment of sentences. Using random word initialization and meaning vectors of length 20, we are able to predict the sentiment of a movie review dataset with a 74.5\% accuracy, which is only 3.3\% less than the 76.8\% accuracy reported in the 2011 paper ``Semi-Supervised Recursive Autoencoders'' by Soch et al.
 \end{abstract}
 
 
@@ -49,12 +49,8 @@ We evaluate semi-supervised recursive autoencoders (RAE) as a method for predict
 % INTRO
 %-----------------------------------------------------------------------------
 \section{Introduction}
+Learning the meaning of text documents, including short documents such as Twitter messages, is an active field of research in computer science. Until 2011, the state-of-the-art methods for predicting sentence-level meanings relied on either bag-of-words representations or manually generated resources, both of which have difficulty in dealing with complex sentiments. To overcome this shortcoming, Socher et al. introduced a new semi-supervised method based on neural networks \cite{Socher}. This study will attempt to recreate and expand upon the results reported in Socher et al.
 
-Socher et al. presented a semi-supervised method for learning meanings of sentences using recursive autoencoders \cite{Socher}.
-
-The lecture notes state blah \cite{CSE250B}.
-
-Mention: neural networks, sentence meaning/sentiment
 
 
 
@@ -62,21 +58,44 @@ Mention: neural networks, sentence meaning/sentiment
 % ALGORITHMS
 %-----------------------------------------------------------------------------
 \section{Recursive Autoencoders}
-
-RAE, neural networks, backpropogation, error functions, greedy algorithm, calculating derivatives numerically using finite center-difference
-
-
-\subsection{Error Function}
+For any English sentence of length $n$, the syntactic structure of the sentence can be represented by a binary tree, where each word is a leaf node and the meaning of each node ($x$) is represented as a vector of length $d$ ($x \in R^d$) \cite{CSE250B}. A node that connects two or more words is a phrase, with its meaning being a function of its two children nodes. If node $k$ has children $i$ and $j$, then the meaning of node $k$ is:
 \begin{equation}
-    E_1 (k) =
+    x_k = h(W[x_i ; x_j] + b)
+    \label{eq:xk}
 \end{equation}
+where $W$ and $b$ are parameters to be learned while $h()$ is a pointwise sigmoid function which maps $R^d$ to $[-1, +1]^d$. As $x_k$, $x_i$, and $x_j$ are $\in R^d$, then $W \in R^{d \times 2d}$ and $b \in R^d$. To learn $W$ and $b$, the target meaning $t$ of the sentence must be known, which is usually not the case. To get around this, we use autoencoders, whose goal is to reconstruct the input \cite{CSE250B}.
 
+
+\subsection{Autoencoders}
+For a node $k$ where $t$ is unknown, the inputs $z_i$ and $z_j$ of its children node meanings $x_i$ and $x_j$ can be approximated by:
 \begin{equation}
-    E_2 (k) =
+    [z_i ; z_j] = U x_k + c
 \end{equation}
+where $x_k$ is the same as in Equation \ref{eq:xk}, and $U$ and $c$ are parameters to be learned ($U \in R^{2d \times d}$, $c \in R^d$). Then the square loss at node $k$ is:
+\begin{equation}
+    E = ||x_i - z_i||^2 + ||x_j - z_j||^2 = || [x_i;x_j] - U h(W[x_i; x_j] + b) - c||^2
+\end{equation}
+and the total loss of the tree is the sum of all errors at non-leaf nodes. Importance should be placed more on reduce the error of nodes that have more children nodes, which can be done by modifying the error function to:
+\begin{equation}
+    E_1 (k) = \frac{n_i}{n_i + n_j} ||x_i - z_i||^2 + \frac{n_j}{n_i + n_j} ||x_j - z_j||^2
+\end{equation}
+where $n_i$ and $n_j$ are the number of children nodes of nodes $i$ and $j$ respectively.
 
 
 \subsection{Binary Tree Construction}
+If the tree structure of a sentence is unknown, it can be approximated using a greedy algorithm:
+\begin{enumerate}
+    \item calculate $E_1(k)$ for all $n - 1$ pairs of consecutive words
+    \item select pair with minimum error and connect with a node
+    \item calculate error for all possible pairs (now $n-2$ pairs)
+    \item select pair with minimum error and connect with a node
+    \item repeat until only one choice left for the root node
+\end{enumerate}
+
+
+\subsection{Predicting Labels using Meanings}
+
+
 
 
 \subsection{Backpropogation}
@@ -106,7 +125,7 @@ A downside to using numerical derivatives to verify backpropogation is time comp
 % DATASETS
 %
 \subsection{Datasets}
-We use the same movie reviews dataset as in \cite{Socher}, which consists of 10662 snippets from reviews posted to the Rotten Tomatoes website\footnote{\url{http://www.rottentomatoes.com}}. Each snippet is roughly equivalent to a single sentence and includes a positive/negative label, with the entire dataset containing 5331 positive and 5331 negative labelled snippets. For all experiments we randomly selected $\sim 90\%$ of the original dataset as a training set, with the remaining $\sim 10\%$ used as a testing set. In splitting the dataset we have taken care to prevent any snippets from existing in both sets, so as to not contaminate the results.
+We use the same movie reviews dataset as in \cite{Socher}, which consists of 10662 snippets from reviews posted to the Rotten Tomatoes website\footnote{\url{http://www.rottentomatoes.com}}. Each snippet is roughly equivalent to a single sentence and includes a positive/negative label, with the entire dataset containing 5331 positive and 5331 negative labelled snippets. For all experiments we randomly selected 90\% of the original dataset as a training set, with the remaining 10\% used as a testing set. In splitting the dataset we have taken care to prevent any snippets from existing in both sets, so as to not contaminate the results.
 
 
 %
@@ -140,6 +159,8 @@ same hyperparameters as Socher et al.
 % ANALYSIS
 %
 \subsection{Results}
+
+
 
 \subsubsection{Most Positive and Negative}
 Table \ref{tab:words}--\ref{tab:phrases} shows the words and phrases predicted to be the most positive and negative. The only result that stands out as possibly an error is the word ``flaws'' being predicted as positive rather than negative. Although the word ``flaws`` may be normally associated with a negative meaning, it could be associated with a positive meaning due its usage in a phrase, e.g., ``despite its flaws''.
