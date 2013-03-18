@@ -41,7 +41,7 @@ David Larson \\
 
 
 \begin{abstract}
-We evaluate semi-supervised recursive autoencoders (RAE) as a method for predicting the sentiment of sentences. Using random word initialization and meaning vectors of length 20, we are able to predict the sentiment of a movie review dataset with a 74.5\% accuracy, which is only 3.3\% less than the 76.8\% accuracy reported in the 2011 paper ``Semi-Supervised Recursive Autoencoders'' by Soch et al.
+We evaluate semi-supervised recursive autoencoders (RAE) as a method for predicting the sentiment of sentences. Using random word initialization, meaning vectors of length 20 and cross-validation, we are able to predict the sentiment of a movie review dataset with a 74.5\% accuracy, which is within 3\% of the 76.8\% accuracy reported in the 2011 paper ``Semi-Supervised Recursive Autoencoders'' by Soch et al. Analysis of the words and phrases predicted to be the most positive and negative, as well as the words and phrases with the most similar, reinforce that RAE is an effective method for predicting sentence-level sentiment.
 \end{abstract}
 
 
@@ -197,7 +197,7 @@ The meaning vector of each word was initialized randomly as in Socher et al. by 
 % RESULTS
 %
 \subsection{Results}
-With 10-fold cross-validation and $d=20$, we were able to achieve a prediction accuracy of 74.5\%. This is within 3\% of the prediction accuracy reported by Socher et al. (76.8\%). It should be noted that the accuracy reported by Socher et al. was for $d=100$, which indicates that there is a diminishing return after $d$ exceeds some threshold value.
+With 10-fold cross-validation and $d=20$, we were able to achieve a prediction accuracy of 74.5\% on the testing set (10\% of the original dataset). Our accuracy is within 3\% of the the value reported by Socher et al. (76.8\%). It should be noted that the accuracy reported by Socher et al. was for $d=100$, while we used $d=20$, which indicates that there is a diminishing return after $d$ exceeds some threshold value.
 
 
 \subsubsection{Most Positive and Negative}
@@ -265,8 +265,7 @@ Visually inspecting the tree structure of sentences offers on insight on the str
 % CONCLUSION
 %-----------------------------------------------------------------------------
 \section{Conclusion}
-Semi-supervised recursive autoencoders were used to predict the meanings of a movie review dataset. Our implementation of the method achieved a prediction accuracy of 74.5\%
-
+Semi-supervised recursive autoencoders were used to predict the meanings of a movie review dataset. Using 10-fold validation, randomly generated word meaning vectors, and meaning vectors of length 20, our implementaiton of the method achieves a prediction accuracy of 74.5\%. Although our accuracy is less than the amount reported (76.8\%) in by Socher et al., we use smaller meaning vectors (20 versus Socher et al.'s 100). Additionally, analysis of the most positive and negative, and most similar words and phrases indicate that recursive autoencoders are an effective method for predicting the meanings of text snippets.
 
 
 %-----------------------------------------------------------------------------
