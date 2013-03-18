@@ -143,8 +143,9 @@ To compute this derivative efficiently we use backpropagation as described in \c
 
 Here, $L$ defines the local loss function for node $k$ and $t_k$ is the known training label. Output nodes with decoded values $[c_i' ; c_j']$ only contribute to $J$ with the error function $E_1(k)$, thus
 \begin{equation}
-    \delta_{k} = insert eq from http://cseweb.ucsd.edu/~elkan/250B/KuenHanRAEreport.pdf, replace f'(e_i) with h'(a_i)
+    \delta_{k} = \frac{\partial J}{\partial a_i} = - 2 \alpha \left [ \frac{n_i}{n_i + n_j} (c_i - c_i');  \frac{n_j}{n_i + n_j} (c_j - c_j') \right ] h'(a_i)
 \end{equation}
+
 
 Remaining output nodes contribute with the error function $E_2(k)$.
 \begin{equation}
