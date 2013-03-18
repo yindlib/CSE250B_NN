@@ -62,6 +62,7 @@ Mention: neural networks, sentence meaning/sentiment
 % ALGORITHMS
 %-----------------------------------------------------------------------------
 \section{Recursive Autoencoders}
+
 RAE, neural networks, backpropogation, error functions, greedy algorithm, calculating derivatives numerically using finite center-difference
 
 
@@ -76,6 +77,12 @@ RAE, neural networks, backpropogation, error functions, greedy algorithm, calcul
 
 
 \subsection{Binary Tree Construction}
+
+
+\subsection{Backpropogation}
+Backpropogation is an efficient method for computing the derivatives required for training a neural network. Given
+
+
 
 \subsection{Goal of Training}
 
@@ -146,11 +153,12 @@ The full method (RAE)
 RAE without derivatives to adjust the meaning vector of each word
 
 
+
 \begin{table}[t]
     \centering
 
     \caption{Words predicted to be the most positive and negative.} 
-    \label{tab:most}
+    \label{tab:words}
 
     \ra{1.2}
     \begin{tabular}{@{} l l l @{}}
@@ -158,14 +166,48 @@ RAE without derivatives to adjust the meaning vector of each word
         \toprule
         \bf{Ranking} & \bf{Positive} & \bf{Negative} \\
         \midrule
-        1 &   &  \\
-        2 &   &  \\
-        3 &   &  \\
-        4 &   &  \\
-        5 &   &  \\
+        1 & beautiful   & fails  \\
+        2 & brilliant   & boring \\
+        3 & thoughtful  & neither\\
+        4 & triump      & bad \\
+        5 & flaws       & flat \\
+        6 & beautifully & predictable \\
+        7 & success     & bore \\
+        8 & spectacular & poorly \\
+        9 & enjoyable   & suffers \\
+        10 & wonderful  & unnecessary \\
         \bottomrule
     \end{tabular}
 \end{table}
+
+
+\begin{table}[t]
+    \centering
+
+    \caption{Phrases (length 2) predicted to be the most positive and negative.} 
+    \label{tab:phrases}
+
+    \ra{1.2}
+    \begin{tabular}{@{} l l l @{}}
+        \\
+        \toprule
+        \bf{Ranking} & \bf{Positive} & \bf{Negative} \\
+        \midrule
+        1 & moving and      & lack of \\
+        2 & an enjoyable    & boring .\\
+        3 & and beautifully & how bad \\
+        4 & a moving        & the dullest \\
+        5 & a triumph       & flat , \\
+        6 & a beautiful     & how bad \\
+        7 & the best        & it fails \\
+        8 & and powerful    & it isn't \\
+        9 & its flaws       & and predictable \\
+        10 & a wonderful    & a boring \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+
 
 
 %-----------------------------------------------------------------------------
