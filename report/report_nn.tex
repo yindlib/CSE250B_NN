@@ -118,7 +118,7 @@ where $\bar{t}$ is the true label at node $k$ and is in $R^{r \times d}$.
 
 To predict the target label for all internal nodes, excluding leaf nodes, we need to minimize the objective function $J$, which is defined as
 \begin{equation}
-    J = \frac{1}{m} \sum_{<s,t> \in S} E(s, t, \theta) + \frac{\lambda}{2} ||\theta||^2
+    J = \frac{1}{m} \sum_{(s,t) \in S} E(s, t, \theta) + \frac{\lambda}{2} ||\theta||^2
 \end{equation}
 where $m$ is the length of each labelled training sentences in the set $S$, $\theta = < W, b, U, c, V >$ are the parameters to learn, $\lambda$ is the strength of $L_2$ regularization, and the total error for a sentence $s$ with a true label $t$ ($E(s, t, \theta)$) is
 \begin{equation}
@@ -130,17 +130,34 @@ where $T(s)$ is the set of non-leaf nodes and $\alpha$ is a hyperparameter weigh
 %
 % BACKPROP
 %
-\subsection{Backpropogation}
-Backpropogation is an efficient method for computing the derivatives required for training a neural network. Given
+\subsection{Computing the Gradient}
+To minimize the objective junction $J$ with with gradient following techniques, we need to compute the folowing derivative with parameters $\theta = (W, b, U, c, V, W^{(label)})$ where $N$ is the number of training examples and $W^{(label)} \in R^{K \times d}$ is the wieght matrix governing final output labels \cite{Socher}.
+\begin{equation}
+    \frac{\partial J}{\partial \theta} = \frac{1}{N} \sum_{(x, t)} \frac{\partial E(x, t; \theta)}{\partial \theta} + \lambda \theta
+\end{equation}
 
+To compute this derivative efficiently we use backpropagation as described in \cite{CSE250B}, where the gradient for each node $j$ is conditional on the node being an input or output node. First, we define the partial derivative vector at the node $j$ as
+\begin{equation}
+    \frac{\partial J}{\partial j} = \delta_{k} = \frac{\partial L(z_k , t_k)}{\partial z_k} h'(a_k)
+\end{equation}
 
-%
-% GOAL
-%
-\subsection{Goal of Training}
-The goal of training is to learn the parameters $\theta$ that minimize the objective function $J$.
+Here, $L$ defines the local loss function for node $k$ and $t_k$ is the known training label. Output nodes with decoded values $[c_i' ; c_j']$ only contribute to $J$ with the error function $E_1(k)$, thus
+\begin{equation}
+    \delta_{k} = insert eq from http://cseweb.ucsd.edu/~elkan/250B/KuenHanRAEreport.pdf, replace f'(e_i) with h'(a_i)
+\end{equation}
 
+Remaining output nodes contribute with the error function $E_2(k)$.
+\begin{equation}
+    \delta_{k} = (1 - \alpha)(-t + softmax(a) \sum_{i=1}^r t_i )
+\end{equation}
 
+Internal nodes exhibit a more complex derivative that depends on neighboring nodes:
+
+\begin{equation}
+    \delta_{k} = h'(a_k)(\sum_{i=1}^d \delta_{i}V_{ik} + \sum_{i=1}^{2d} \delta_{i}U_{ik} + \sum_{i=1}^{K} \delta_{i} W^{(label)}_{ik})
+\end{equation}
+
+Here, the term $\sum_{i=1}^d \delta_{i}V_{ik}$ sums over all other dependent internal nodes while $\sum_{i=1}^{2d} \delta_{i}U_{ik}$ sums over output nodes contributing with the error function $E_1(k)$ and $\sum_{i=1}^{K} \delta_{i} W^{(label)}_{ik}$ sums over output nodes contributing with the error function $E_2(k)$.
 %
 % FINITE CENTRAL-DIFFERENCES
 %
@@ -149,7 +166,7 @@ It is important to verify the accuracy of the gradients calculated using backpro
 \begin{equation}
     \frac{\partial J}{\partial \theta} = \frac{J(\theta + \epsilon) - J(\theta - \epsilon)}{2\epsilon} + O(\epsilon ^2)
 \end{equation}
-where $\epsilon$ is the grid spacing.
+where $\epsilon$ is the grid spacing. The computed gradient was then verified to be correct within the order of $10^6$.
 
 A downside to using numerical derivatives to verify backpropogation is time complexity. If $W \in R^{2d \times d}$ then the time complexity of computing derivatives is $O(d^2)$ using backpropgation and $O(d^4)$ using finite central-differences, which is not feasible for real-world applications. One option for reducing the time complexity of checking the derivatives is to check a subset of the derivatives, chosen randomly, and assume those selected derivatives are representative of the entire set.
 
@@ -170,11 +187,7 @@ We use the same movie reviews dataset as in \cite{Socher}, which consists of 106
 % OPTIMIZATION
 %
 \subsection{Optimization}
-We use limited-memory Broyden-Fletcher-Goldfarb-Shanno (L-BFGS), a well-known quasi-Newton optimization method, to learn the parameters $\theta$. Specifically we use the Matlab-based L-BFGS function from the minFunc toolbox \cite{minFunc} to minimize the objective function with parameters $\theta = < W, b, U, c, V>$ and gradient:
-\begin{equation}
-    \frac{\partial J}{\partial \theta} = \frac{1}{N} \sum_{(x, t)} \frac{\partial E(x, t; \theta)}{\partial \theta} + \lambda \theta
-\end{equation}
-where $N$ is the number of training examples.
+We use limited-memory Broyden-Fletcher-Goldfarb-Shanno (L-BFGS), a well-known quasi-Newton optimization method, to learn the parameters $\theta$. Specifically we use the Matlab-based L-BFGS function from the minFunc toolbox \cite{minFunc} to minimize the objective function $J$.
 
 
 %
