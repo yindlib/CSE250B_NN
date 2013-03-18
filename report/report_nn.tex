@@ -184,17 +184,12 @@ For the purpose of this study, we arbitrarily set $\epsilon = 10^{-4}$ and the m
 \subsection{Random Word Initialization}
 The meaning vector of each word was initialized randomly as in Socher et al. by using a Gaussian distribution of $\mu = 0$ and $\sigma ^2 = 0.05$.
 
-d = 20: prediction accuracy = 74.5\%
-
-
-
-
 
 %
-% ANALYSIS
+% RESULTS
 %
 \subsection{Results}
-With 10-fold cross-validation and $d=20$, we were able to achieve a prediction accuracy of 74.5\%.
+With 10-fold cross-validation and $d=20$, we were able to achieve a prediction accuracy of 74.5\%. This is within 3\% of the prediction accuracy reported by Socher et al. (76.8\%). It should be noted that the accuracy reported by Socher et al. was for $d=100$, which indicates that there is a diminishing return after $d$ exceeds some threshold value.
 
 
 \subsubsection{Most Positive and Negative}
