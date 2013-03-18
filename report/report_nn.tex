@@ -5,7 +5,7 @@
 
 % figures
 \usepackage{graphicx}
-\usepackage{subfigure} 
+\graphicspath{{fig/}}
 
 % links
 \usepackage[hidelinks]{hyperref}
@@ -94,6 +94,7 @@ It is important to verify the accuracy of the gradients calculated using backpro
 \end{equation}
 where $\epsilon$ is the grid spacing.
 
+A downside to using numerical derivatives to verify backpropogation is time complexity. If $W \in R^{2d \times d}$ then the time complexity of computing derivatives is $O(d^2)$ using backpropgation and $O(d^4)$ using finite central-differences, which is not feasible for real-world applications. One option for reducing the time complexity of checking the derivatives is to check a subset of the derivatives, chosen randomly, and assume those selected derivatives are representative of the entire set.
 
 
 %-----------------------------------------------------------------------------
@@ -115,7 +116,6 @@ We use the same movie reviews dataset as in \cite{Socher}, which consists of 106
 We use limited-memory Broyden-Fletcher-Goldfarb-Shanno (L-BFGS), a well-known quasi-Newton optimization method, to learn the parameters $\theta$. Specifically we use the Matlab-based L-BFGS function from the minFunc toolbox \cite{minFunc}.
 
 
-
 Convergence: error less than $10^{-6}$ (as stated in the project description)
 
 Regularization: ?
@@ -133,12 +133,6 @@ d = 20: prediction accuracy = 74.5\%
 
 same hyperparameters as Socher et al.
 
-
-%
-% NO DERIVATIVES
-%
-\subsection{Experiment 2: RAE without Derivatives}
-RAE without derivatives to adjust the meaning vector of each word
 
 
 
@@ -218,10 +212,27 @@ which is bounded between $-1$ (opposite in meaning) and $+1$ (same in meaning). 
     \item Negative phrases (length 2): ``moving and'' and ``and powerful''
 \end{enumerate}
 
-\subsubsection{Tree structure of Interesting Sentences}
-4. Pick some interesting sentences and show the tree structure that the greedy algorithm finds for them.
+
+\subsubsection{Tree Structure of Interesting Sentences}
+Visually inspecting the tree structure of sentences offers on insight on the strengths and weaknesses of the greedy algorithm. Figure \ref{fig:tree_positive} shows the structure of a positive sentence, which the greedy algorithm correctly determined. Meanwhile Figure \ref{fig:tree_negative} shows the structure of a negative sentence which the greedy algorithm performed poorly. Specifically, the structure should have connected ``right now'' with ``go , girls'' instead of ``the reality drain .''. Incorrectly determine tree structures such shown in Figure \ref{fig:tree_negative} likely caused problems for the RAE model and decreased it's prediction accuracy.
 
 
+\begin{figure}[h]
+\begin{center}
+    \includegraphics[width=0.7\textwidth]{tree_positive}
+    \caption{The tree structured determined by the greedy algorithm of a positive sentence.}
+    \label{fig:tree_positive}
+\end{center}
+\end{figure}
+
+
+\begin{figure}[h]
+\begin{center}
+    \includegraphics[width=0.7\textwidth]{tree_positive}
+    \caption{The tree structured determined by the greedy algorithm of a negative sentence.}
+    \label{fig:tree_negative}
+\end{center}
+\end{figure}
 
 
 
